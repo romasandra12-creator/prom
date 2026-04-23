@@ -1,54 +1,74 @@
-// 1. Анімації
-AOS.init({ duration: 1200, once: true });
+// Я огорнув весь код у спеціальну функцію, яка чекає, поки сайт повністю завантажиться.
+// Це гарантує, що всі лічильники та кнопки будуть працювати на 100%.
 
-// 2. Точні лічильники
-function animateNumbers() {
-    const numbers = document.querySelectorAll('.num');
-    numbers.forEach(num => {
-        const target = +num.getAttribute('data-target');
-        let count = 0;
-        const speed = target / 100;
-        
-        const update = () => {
-            if (count < target) {
-                count += speed;
-                num.innerText = Math.ceil(count);
-                setTimeout(update, 20);
-            } else {
-                num.innerText = target;
-            }
-        };
-        update();
-    });
-}
-
-// Запуск лічильників при скролі
-const observer = new IntersectionObserver((entries) => {
-    if(entries[0].isIntersecting) {
-        animateNumbers();
-        observer.unobserve(entries[0].target);
-    }
-}, { threshold: 0.5 });
-observer.observe(document.querySelector('.stats-section'));
-
-// 3. ТАЙМЕР до 17.06.2026 13:00
-function startCountdown() {
-    const target = new Date("June 17, 2026 13:00:00").getTime();
+document.addEventListener("DOMContentLoaded", () => {
     
-    setInterval(() => {
-        const now = new Date().getTime();
-        const diff = target - now;
-        
-        if (diff > 0) {
-            document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
-            document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            document.getElementById('mins').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        }
-    }, 1000);
-}
-startCountdown();
+    // 1. Ініціалізація анімацій
+    AOS.init({ duration: 1000, once: true });
 
-// 4. Інтерактивна локація (Переворот картки)
-function revealLocation() {
-    document.getElementById('location-card').classList.add('revealed');
-}
+    // 2. Лічильники (Дні, Випускники, Групи)
+    const statsSection = document.querySelector('.stats-section');
+    const numbers = document.querySelectorAll('.num');
+    let countersStarted = false;
+
+    if (statsSection && numbers.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && !countersStarted) {
+                countersStarted = true;
+                
+                numbers.forEach(num => {
+                    const target = +num.getAttribute('data-target');
+                    let count = 0;
+                    // Швидкість бігу цифр. Чим менше ділене, тим швидше.
+                    const increment = target / 60; 
+                    
+                    const updateCount = () => {
+                        if (count < target) {
+                            count += increment;
+                            num.innerText = Math.ceil(count);
+                            // Використовуємо плавну анімацію браузера
+                            requestAnimationFrame(updateCount); 
+                        } else {
+                            num.innerText = target;
+                        }
+                    };
+                    updateCount();
+                });
+            }
+        }, { threshold: 0.3 });
+        
+        observer.observe(statsSection);
+    }
+
+    // 3. ТАЙМЕР ДО СВЯТКУВАННЯ (17 Червня 2026, 13:00)
+    const targetDate = new Date("June 17, 2026 13:00:00").getTime();
+    
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minsEl = document.getElementById('mins');
+    const secsEl = document.getElementById('secs');
+
+    if (daysEl && hoursEl && minsEl && secsEl) {
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+            
+            if (diff > 0) {
+                daysEl.innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                hoursEl.innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                minsEl.innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                secsEl.innerText = Math.floor((diff % (1000 * 60)) / 1000);
+            }
+        }, 1000);
+    }
+
+    // 4. ІНТЕРАКТИВНА КАРТКА ЛОКАЦІЇ (Тап/Клік для перевороту)
+    const locationCard = document.getElementById('location-card');
+    
+    if (locationCard) {
+        locationCard.addEventListener('click', () => {
+            locationCard.classList.toggle('revealed');
+        });
+    }
+
+});
