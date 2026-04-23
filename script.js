@@ -1,98 +1,87 @@
-// 1. Анімації AOS
-AOS.init({ duration: 1200, once: true, offset: 50 });
+// 1. Анімації при прокручуванні
+AOS.init({ duration: 1000, once: true });
 
-// 2. ІНТЕРАКТИВ "СКРЕТЧ-КАРТКА"
-document.addEventListener("DOMContentLoaded", () => {
-    const canvas = document.getElementById("scratch-canvas");
-    const ctx = canvas.getContext("2d");
-    const wrapper = document.getElementById("scratch-wrapper");
+// 2. ЛОГІКА ЛІЧИЛЬНИКІВ (STATS)
+const stats = document.querySelectorAll('.stat-number');
+const speed = 200;
 
-    // Встановлюємо розмір канвасу відповідно до блоку
-    function resizeCanvas() {
-        canvas.width = wrapper.offsetWidth;
-        canvas.height = wrapper.offsetHeight;
-        drawOverlay();
-    }
+const startCounters = () => {
+    stats.forEach(counter => {
+        const updateCount = () => {
+            const target = +counter.getAttribute('data-target');
+            const count = +counter.innerText;
+            const inc = target / speed;
 
-    // Малюємо захисний шар
-    function drawOverlay() {
-        // Темно-зелений фон
-        ctx.fillStyle = "#14321e";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        // Патерн / Лінії для текстури
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = "rgba(212, 175, 55, 0.1)"; // Золотий напівпрозорий
-        for(let i = 0; i < canvas.width * 2; i+=20) {
-            ctx.beginPath();
-            ctx.moveTo(i, 0);
-            ctx.lineTo(i - canvas.height, canvas.height);
-            ctx.stroke();
-        }
-
-        // Текст "Гриф: Секретно"
-        ctx.fillStyle = "#d4af37";
-        ctx.font = "bold 18px Montserrat";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillText("ГРИФ: ЦІЛКОМ ТАЄМНО", canvas.width / 2, canvas.height / 2 - 15);
-        
-        ctx.fillStyle = "#f4f1ea";
-        ctx.font = "14px Montserrat";
-        ctx.fillText("Зітріть захисний шар", canvas.width / 2, canvas.height / 2 + 15);
-    }
-
-    // Логіка стирання
-    let isDrawing = false;
-
-    function getMousePos(evt) {
-        const rect = canvas.getBoundingClientRect();
-        const scaleX = canvas.width / rect.width;
-        const scaleY = canvas.height / rect.height;
-        let clientX = evt.clientX || (evt.touches && evt.touches[0].clientX);
-        let clientY = evt.clientY || (evt.touches && evt.touches[0].clientY);
-        
-        return {
-            x: (clientX - rect.left) * scaleX,
-            y: (clientY - rect.top) * scaleY
+            if (count < target) {
+                counter.innerText = Math.ceil(count + inc);
+                setTimeout(updateCount, 1);
+            } else {
+                counter.innerText = target;
+            }
         };
+        updateCount();
+    });
+};
+
+// Запуск лічильників, коли користувач до них доскролив
+const observer = new IntersectionObserver((entries) => {
+    if(entries[0].isIntersecting) {
+        startCounters();
+        observer.unobserve(entries[0].target);
     }
+}, { threshold: 0.5 });
 
-    function startPosition(e) {
-        isDrawing = true;
-        scratch(e);
+if(document.querySelector('.stats-section')) {
+    observer.observe(document.querySelector('.stats-section'));
+}
+
+// 3. ТАЙМЕР ДО ПОЧАТКУ СВЯТКУВАННЯ (17 червня 2026, 13:00)
+const partyDate = new Date("June 17, 2026 13:00:00").getTime();
+
+setInterval(() => {
+    const now = new Date().getTime();
+    const diff = partyDate - now;
+
+    if (diff > 0) {
+        document.getElementById('p-days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+        document.getElementById('p-hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        document.getElementById('p-mins').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        document.getElementById('p-secs').innerText = Math.floor((diff % (1000 * 60)) / 1000);
     }
+}, 1000);
 
-    function endPosition() {
-        isDrawing = false;
-        ctx.beginPath();
-    }
+// 4. СКРЕТЧ-КАРТКА
+const canvas = document.getElementById('scratch-canvas');
+const ctx = canvas.getContext('2d');
+const wrapper = document.getElementById('scratch-wrapper');
 
-    function scratch(e) {
-        if (!isDrawing) return;
-        e.preventDefault();
+function initScratch() {
+    canvas.width = wrapper.offsetWidth;
+    canvas.height = wrapper.offsetHeight;
+    
+    // Заливаємо темно-зеленим
+    ctx.fillStyle = '#1d4e1d';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    ctx.fillStyle = '#c5a059';
+    ctx.font = 'bold 20px Montserrat';
+    ctx.textAlign = 'center';
+    ctx.fillText('СЕКРЕТНА ЛОКАЦІЯ', canvas.width/2, canvas.height/2);
+}
 
-        const pos = getMousePos(e);
+function scratch(e) {
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.clientX || e.touches[0].clientX) - rect.left;
+    const y = (e.clientY || e.touches[0].clientY) - rect.top;
+    
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath();
+    ctx.arc(x, y, 30, 0, Math.PI * 2);
+    ctx.fill();
+}
 
-        ctx.globalCompositeOperation = "destination-out"; // "Стирає" пікселі
-        ctx.lineWidth = 40; // Товщина пальця/пензля
-        ctx.lineCap = "round";
+canvas.addEventListener('mousemove', (e) => { if(e.buttons === 1) scratch(e); });
+canvas.addEventListener('touchmove', (e) => scratch(e));
 
-        ctx.lineTo(pos.x, pos.y);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(pos.x, pos.y);
-    }
-
-    // Події для мишки та сенсорних екранів
-    canvas.addEventListener("mousedown", startPosition);
-    canvas.addEventListener("mouseup", endPosition);
-    canvas.addEventListener("mousemove", scratch);
-
-    canvas.addEventListener("touchstart", startPosition, {passive: false});
-    canvas.addEventListener("touchend", endPosition);
-    canvas.addEventListener("touchmove", scratch, {passive: false});
-
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-});
+window.addEventListener('load', initScratch);
+window.addEventListener('resize', initScratch);
