@@ -118,15 +118,24 @@
                     <h2 class="title-gold">ЛОКАЦІЯ</h2>
                     <p class="desc-text" style="margin-bottom: 20px;">Інформація про місце проведення банкету прихована.</p>
                     
-                    <button id="reveal-btn" class="btn-reveal">РОЗСЕКРЕТИТИ</button>
+                    <button id="reveal-btn" class="btn-reveal" onclick="showSecret()">РОЗСЕКРЕТИТИ</button>
                     
-                    <div id="secret-location" class="hidden">
+                    <div id="secret-location" style="display: none;">
                         <div class="line-gold-small"></div>
                         <h3 class="big-location-text">ГРК "SOBKOF"</h3>
                         <p class="desc-text">м. Хмельницький</p>
                         <p class="time-gold">Збір гостей о 13:00</p>
                         <a href="https://goo.gl/maps/PLACEHOLDER" target="_blank" class="map-link">ПОКАЗАТИ НА КАРТІ</a>
                     </div>
+
+                    <script>
+                        function showSecret() {
+                            document.getElementById('reveal-btn').style.display = 'none';
+                            const secretBox = document.getElementById('secret-location');
+                            secretBox.style.display = 'block';
+                            secretBox.classList.add('fade-in');
+                        }
+                    </script>
                 </div>
             </div>
         </section>
