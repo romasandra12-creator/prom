@@ -3,105 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Урочистий випуск курсантів факультету забезпечення оперативно-службової діяльності 2026</title>
+    <title>Випуск курсантів факультету забезпечення оперативно-службової діяльності 2026 | НАДПСУ</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <div class="noise-overlay"></div>
+
     <header class="hero">
         <div class="hero-bg">
-            <img src="group.jpg" alt="Випускники">
+            <img src="group.jpg" alt="НАДСУ">
             <div class="overlay"></div>
         </div>
-        
-        <div class="hero-content" data-aos="zoom-in" data-aos-duration="1500">
-            <img src="emblem.jpg" alt="Емблема ФЗОСД" class="emblem">
+        <div class="hero-content" data-aos="zoom-in">
+            <img src="emblem.jpg" alt="Емблема" class="hero-emblem">
             <h1 class="gold-text">УРОЧИСТИЙ ВИПУСК</h1>
-            <p class="subtitle">ФАКУЛЬТЕТ ЗАБЕЗПЕЧЕННЯ ОПЕРАТИВНО-СЛУЖБОВОЇ ДІЯЛЬНОСТІ</p>
+            <p class="academy-name">НАЦІОНАЛЬНА АКАДЕМІЯ ДЕРЖАВНОЇ ПРИКОРДОННОЇ СЛУЖБИ УКРАЇНИ</p>
             <div class="line"></div>
-            <p class="devis">AUT VIAM INVENIAM AUT FACIAM</p>
+            <p class="faculty-title">Факультет забезпечення оперативно-службової діяльності</p>
         </div>
-        <div class="scroll-arrow">↓</div>
+        <div class="scroll-hint">ГОРТАЙТЕ ВНИЗ</div>
     </header>
 
     <main>
-        <section class="welcome-section" data-aos="fade-up">
+        <section class="stats-section">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item" data-aos="fade-up">
+                        <span class="stat-number" data-target="1391">0</span>
+                        <p>Днів навчання</p>
+                    </div>
+                    <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+                        <span class="stat-number" data-target="106">0</span>
+                        <p>Нових офіцерів</p>
+                    </div>
+                    <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+                        <span class="stat-number" data-target="4">0</span>
+                        <p>Навчальні групи</p>
+                    </div>
+                    <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+                        <span class="stat-number" data-target="20000">0</span>
+                        <p>Годин варти</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="groups-detail-section">
+            <div class="container">
+                <h2 class="section-title text-center" data-aos="fade-up">НАШІ НАВЧАЛЬНІ ГРУПИ</h2>
+                
+                <div class="group-long-card" data-aos="fade-right">
+                    <div class="group-info">
+                        <h3>441 ГРУПА <span class="spec">"Філологія"</span></h3>
+                        <p>Майстри слова та міжнародної комунікації. Ті, хто забезпечує розуміння на кордонах та представляє ДПСУ на міжнародній арені. Сила мови — їхня головна зброя.</p>
+                    </div>
+                </div>
+
+                <div class="group-long-card reverse" data-aos="fade-left">
+                    <div class="group-info">
+                        <h3>442 ГРУПА <span class="spec">"Психологія"</span></h3>
+                        <p>Вартові морального духу та психологічної стійкості. Вони знають, що за кожним наказом стоїть людина, і вміють знайти ключ до кожного серця в найскладніших умовах.</p>
+                    </div>
+                </div>
+
+                <div class="group-long-card" data-aos="fade-right">
+                    <div class="group-info">
+                        <h3>443 ГРУПА <span class="spec">"Інженерно-технічні підрозділи"</span></h3>
+                        <p>Творці міцності та надійності. Від фортифікацій до складних технічних споруд — вони будують майбутнє безпеки кордону своїми знаннями та витримкою.</p>
+                    </div>
+                </div>
+
+                <div class="group-long-card reverse" data-aos="fade-left">
+                    <div class="group-info">
+                        <h3>444 ГРУПА <span class="spec">"Телекомунікації"</span></h3>
+                        <p>Майстри ефіру та цифрового щита. Забезпечують зв'язок там, де його неможливо уявити. Архітектори інформаційної безпеки та розробники даного цифрового простору.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="countdown-section" data-aos="zoom-in">
             <div class="container text-center">
-                <h2 class="section-title">ШАНОВНІ ВИКЛАДАЧІ, БАТЬКИ ТА ДРУЗІ!</h2>
-                <p class="intro-text">
-                    Ці роки в Національній академії Державної прикордонної служби України стали для нас школою життя, честі та братерства. 
-                    Ми пройшли цей шлях завдяки вашій вірі та підтримці. 
-                    <br><br>
-                    Запрошуємо вас розділити з нами радість завершення навчання та відсвяткувати наш випуск!
-                </p>
+                <h2 class="section-title">ЧАС ДО ПОЧАТКУ СВЯТКУВАННЯ</h2>
+                <div id="party-timer" class="timer-display">
+                    <div class="time-block"><span id="p-days">00</span><small>днів</small></div>
+                    <div class="time-block"><span id="p-hours">00</span><small>год</small></div>
+                    <div class="time-block"><span id="p-mins">00</span><small>хв</small></div>
+                    <div class="time-block"><span id="p-secs">00</span><small>сек</small></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scratch-section">
+            <div class="container text-center">
+                <h2 class="section-title" data-aos="fade-up">ЛОКАЦІЯ БАНКЕТУ</h2>
+                <p class="hint-text" data-aos="fade-up">Зітріть захисний шар, щоб побачити деталі</p>
+                <div class="scratch-box" id="scratch-wrapper" data-aos="flip-up">
+                    <div class="secret-info">
+                        <h3>готельно-ресторанний комплекс "SOBKOF"</h3>
+                        <p>17 ЧЕРВНЯ | 13:00</p>
+                        <a href="https://www.google.com/maps/dir//%D1%81%D0%BE%D0%B1%D0%BA%D0%BE%D1%84/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x4732065507403ea5:0x269769ba90951444?sa=X&ved=1t:155782&ictx=111">ВІДКРИТИ КАРТУ</a>
+                    </div>
+                    <canvas id="scratch-canvas"></canvas>
+                </div>
             </div>
         </section>
 
         <section class="gallery-section">
             <div class="container">
-                <div class="bento-grid">
-                    <div class="bento-item" data-aos="fade-right"><img src="photo1.jpg" alt="Фото 1"></div>
-                    <div class="bento-item" data-aos="zoom-in"><img src="photo2.jpg" alt="Фото 2"></div>
-                    <div class="bento-item" data-aos="fade-left"><img src="photo3.jpg" alt="Фото 3"></div>
+                <h2 class="section-title text-center" data-aos="fade-up">МОМЕНТИ СЛУЖБИ</h2>
+                <div class="gallery-grid">
+                    <div class="photo-frame" data-aos="fade-up"><img src="photo1.jpg" alt="Фото 1"></div>
+                    <div class="photo-frame" data-aos="fade-up" data-aos-delay="100"><img src="photo2.jpg" alt="Фото 2"></div>
+                    <div class="photo-frame" data-aos="fade-up" data-aos-delay="200"><img src="photo3.jpg" alt="Фото 3"></div>
                 </div>
-            </div>
-        </section>
-
-        <section class="groups-section">
-            <div class="container">
-                <h2 class="section-title text-center" data-aos="fade-up">ВИПУСКНИКИ 2026 РОКУ</h2>
-                <div class="groups-grid">
-                    <div class="group-card" data-aos="fade-up" data-aos-delay="100">
-                        <div class="group-number">441</div>
-                        <p class="group-spec">Філологія</p>
-                    </div>
-                    <div class="group-card" data-aos="fade-up" data-aos-delay="200">
-                        <div class="group-number">442</div>
-                        <p class="group-spec">Психологія оперативно-службової діяльності</p>
-                    </div>
-                    <div class="group-card" data-aos="fade-up" data-aos-delay="300">
-                        <div class="group-number">443</div>
-                        <p class="group-spec">Організація діяльності інженерно-технічних підрозділів ДПСУ</p>
-                    </div>
-                    <div class="group-card" data-aos="fade-up" data-aos-delay="400">
-                        <div class="group-number">444</div>
-                        <p class="group-spec">Телекомунікація та радіотехніка</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="secret-section" data-aos="zoom-in">
-            <div class="container text-center">
-                <h2 class="section-title">ДЕТАЛІ СВЯТКУВАННЯ</h2>
-                <p class="intro-text" style="margin-bottom: 30px;">
-                    Офіційна частина відбудеться 20 червня. <br>
-                    А святковий банкет з нагоди випуску — <b>17 червня 2026 року</b>. <br>
-                    Зітріть захисний шар, щоб розсекретити місце збору!
-                </p>
-
-                <div class="scratch-container" id="scratch-wrapper">
-                    <div class="secret-content">
-                        <h3>17 ЧЕРВНЯ 2026 | 13:00</h3>
-                        <p class="gold-text" style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;">ГРК "SOBKOF"</p>
-                        <p>м. Хмельницький</p>
-                        <a href="https://www.google.com/maps/place/Sobkoff/@49.4199323,27.021801,17z/data=!3m1!4b1!4m9!3m8!1s0x4732065507403ea5:0x269769ba90951444!5m2!4m1!1i2!8m2!3d49.4199323!4d27.021801!16s%2Fg%2F11b6b84r1p?entry=ttu&g_ep=EgoyMDI2MDQyMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-gold">ПОКАЗАТИ НА КАРТІ</a>
-                    </div>
-                    <canvas id="scratch-canvas"></canvas>
-                </div>
-
             </div>
         </section>
     </main>
 
     <footer>
         <div class="container text-center">
-            <p>Честь. Відповідальність. Братерство.</p>
-            <div class="footer-line"></div>
-            <p class="dev-credits">Запрошення розроблено курсантами 444 навчальної групи 🫡</p>
+            <div class="f-line"></div>
+            <p>17.06.2026 | НАДСУ</p>
+            <p class="credits">Розроблено курсантами 444 навчальної групи 📡</p>
         </div>
     </footer>
 
