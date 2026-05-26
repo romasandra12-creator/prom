@@ -3,164 +3,598 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Випуск НАДСУ 2026</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css?v=2">
+    <title>Випуск 2026 — Факультет забезпечення оперативно-службової діяльності</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500&display=swap');
+
+        /* НОВИЙ ЗАБЛЮРЕНИЙ ФОНОВИЙ ШАР НА ВСЮ СТОРІНКУ */
+        .page-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0c1c13; 
+            background-image: url('hero.jpg'); 
+            background-size: cover;
+            background-position: center;
+            filter: blur(5px);
+            -webkit-filter: blur(5px);
+            z-index: -2; 
+            pointer-events: none; 
+        }
+
+        .page-background::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(12, 28, 19, 0.4) 0%, rgba(12, 28, 19, 0.1) 50%, rgba(12, 28, 19, 0.7) 100%);
+        }
+
+        body {
+            color: #ffffff;
+            font-family: 'Cormorant Garamond', serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* ЗАБЛЮРЕНИЙ СТАРТОВИЙ ЕКРАН */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(12, 28, 19, 0.75);
+            backdrop-filter: blur(15px); 
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .start-btn {
+            border: 1px solid #d4af37;
+            background: transparent;
+            color: #ffffff;
+            padding: 15px 40px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1em;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+        }
+        .start-btn:hover {
+            background: #d4af37;
+            color: #0c1c13;
+            box-shadow: 0 0 25px rgba(214, 175, 55, 0.5);
+        }
+
+        .welcome-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(1.05);
+        }
+
+        /* Кнопка музики */
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(12, 28, 19, 0.8);
+            color: #d4af37;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: 1px solid #d4af37;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+        .music-control.playing {
+            animation: spin 5s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* КОНТЕЙНЕР НА ВСЮ СТОРІНКУ */
+        .main-wrapper {
+            width: 100%;
+            max-width: 100%;
+            padding: 40px 0;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .academy-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 25px;
+        }
+
+        .academy-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85em;
+            font-weight: 400;
+            letter-spacing: 2.5px;
+            line-height: 1.6;
+            text-transform: uppercase;
+            color: #e0e0e0;
+            margin-bottom: 30px;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        h1.main-title {
+            font-size: 3em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #ffffff;
+            margin: 0 0 15px 0;
+            padding: 0 20px;
+        }
+
+        .group-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #ffffff;
+            margin-bottom: 35px;
+            padding: 0 20px;
+            line-height: 1.4;
+        }
+
+        /* АДАПТИВНІ КАРТКИ НА ВСЮ СТОРІНКУ */
+        .gold-border-card {
+            border: 1px solid #d4af37;
+            padding: 40px 30px;
+            margin: 0 25px 35px 25px;
+            background-color: rgba(12, 28, 19, 0.5);
+            box-sizing: border-box;
+        }
+
+        @media (min-width: 800px) {
+            .gold-border-card {
+                max-width: 750px;
+                margin: 0 auto 35px auto;
+            }
+        }
+
+        .card-heading {
+            font-size: 1.8em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #d4af37;
+            margin-top: 0;
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
+
+        .invitation-body {
+            font-size: 1.3em;
+            line-height: 1.7;
+            color: #f0f0f0;
+            margin: 0;
+            text-align: center;
+        }
+
+        /* Стилі для сітки навчальних груп факультету */
+        .faculty-groups-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 25px;
+            text-align: left;
+        }
+        @media (max-width: 650px) {
+            .faculty-groups-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .group-item-card {
+            border: 1px solid rgba(214, 175, 55, 0.3);
+            padding: 20px;
+            background: rgba(12, 28, 19, 0.6);
+        }
+        .group-item-num {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1em;
+            color: #d4af37;
+            font-weight: 500;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+        .group-item-desc {
+            font-size: 1.15em;
+            line-height: 1.4;
+            color: #e0e0e0;
+        }
+
+        .event-info-box {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px dashed rgba(214, 175, 55, 0.3);
+        }
+        .time-badge {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1em;
+            letter-spacing: 2px;
+            color: #d4af37;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .venue-text {
+            font-size: 1.25em;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        .btn-gold-action {
+            display: inline-block;
+            border: 1px solid #d4af37;
+            color: #ffffff;
+            background: transparent;
+            padding: 12px 35px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8em;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-top: 5px;
+        }
+        .btn-gold-action:hover {
+            background: #d4af37;
+            color: #0c1c13;
+            box-shadow: 0 0 15px rgba(214, 175, 55, 0.4);
+        }
+
+        .timer-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #a0a0a0;
+            margin-bottom: 20px;
+        }
+        .timer-display {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+        .timer-element {
+            min-width: 65px;
+        }
+        .timer-value {
+            font-size: 2.4em;
+            color: #ffffff;
+            font-weight: 300;
+        }
+        .timer-label {
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #d4af37;
+            margin-top: 5px;
+        }
+
+        /* Галерея на 4 фотографії груп */
+        .gallery-container {
+            position: relative;
+            width: 100%;
+            height: 420px;
+            overflow: hidden;
+            border: 1px solid rgba(214, 175, 55, 0.3);
+            margin-top: 20px;
+        }
+        .gallery-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.4s ease-in-out;
+        }
+        .gallery-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .gallery-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .gallery-caption {
+            position: absolute;
+            bottom: 0; left: 0; width: 100%;
+            background: rgba(12, 28, 19, 0.85);
+            padding: 12px 0;
+            font-size: 1.05em;
+            color: #d4af37;
+            border-top: 1px solid rgba(214, 175, 55, 0.3);
+        }
+        .nav-arrow {
+            position: absolute;
+            top: 50%; transform: translateY(-50%);
+            background: rgba(12, 28, 19, 0.6);
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            width: 36px; height: 36px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            z-index: 5; transition: all 0.3s;
+        }
+        .nav-arrow:hover { background: #d4af37; color: #0c1c13; }
+        .nav-arrow.arrow-left { left: 15px; }
+        .nav-arrow.arrow-right { right: 15px; }
+
+        .dots-box {
+            display: flex; justify-content: center; gap: 8px; margin-top: 15px;
+        }
+        .dot-indicator {
+            width: 7px; height: 7px;
+            border: 1px solid #d4af37;
+            border-radius: 50%; cursor: pointer;
+        }
+        .dot-indicator.active { background-color: #d4af37; }
+
+        .page-footer {
+            margin: 40px 25px 10px 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(214, 175, 55, 0.2);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8em;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #8c9c92;
+            line-height: 1.6;
+        }
+        .footer-highlight {
+            color: #d4af37;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 600px) {
+            h1.main-title { font-size: 2.1em; }
+            .group-title { font-size: 1.2em; }
+            .card-heading { font-size: 1.45em; }
+            .invitation-body { font-size: 1.15em; }
+            .gold-border-card { padding: 30px 15px; margin: 0 15px 30px 15px; }
+            .gallery-container { height: 260px; }
+            .timer-value { font-size: 1.9em; }
+        }
+    </style>
 </head>
 <body>
 
-    <div class="noise"></div>
+    <div class="page-background"></div>
 
-    <header class="hero">
-        <div class="hero-bg">
-            <img src="group.jpg" alt="Випускники">
-            <div class="overlay"></div>
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <button class="start-btn" onclick="startExperience()">Розпочати</button>
+    </div>
+
+    <audio id="backgroundAudio" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <button class="music-control" id="audioBtn" onclick="toggleAudio()">🎵</button>
+
+    <div class="main-wrapper">
+        
+        <img src="logo.jpg" alt="НАДПСУ" class="academy-logo">
+
+        <div class="academy-name">
+            Національна академія Державної прикордонної служби України<br>імені Богдана Хмельницького
         </div>
-        <div class="hero-content" data-aos="fade-down">
-            <img src="emblem.jpg" alt="Емблема" class="hero-emblem">
-            <p class="academy-tag">НАЦІОНАЛЬНА АКАДЕМІЯ ДЕРЖАВНОЇ ПРИКОРДОННОЇ СЛУЖБИ УКРАЇНИ</p>
-            <div class="line-gold"></div>
-            <h1>УРОЧИСТИЙ ВИПУСК 2026</h1>
+
+        <h1 class="main-title">Випуск Офіцерів 2026</h1>
+        <div class="group-title">Факультет забезпечення<br>оперативно-службової діяльності</div>
+
+        <div class="gold-border-card">
+            <div class="card-heading">З повагою та вдячністю від усього випускного курсу</div>
+            
+            <div class="invitation-body">
+                Вельмишановні викладачі, наші курсові офіцери та керівництво Академії!<br>
+                Чотири роки напруженого вишколу, полігонів та лекцій пролетіли як один день. За цей час ви стали для нас надійним орієнтиром, ділилися безцінним досвідом та вкладали у кожного з нас свою душу.<br><br>
+                Випускники всього нашого факультету щиро запрошують Вас розділити радість довгоочікуваної події — отримання перших офіцерських погонів та нашого випускного вечора.<br>
+                Чекаємо Вас на нашому святі!
+            </div>
+
+            <div class="faculty-groups-grid">
+                <div class="group-item-card">
+                    <div class="group-item-num">441 навчальна група</div>
+                    <div class="group-item-desc">Ті, хто вміють перекладати не лише слова, а й сенси.
+Майстри комунікації, дипломатії та переконання. Їхня зброя — знання мов, гострий розум і влучне слово.
+Саме вони руйнують мовні бар’єри, знаходять спільну мову з будь-ким та доводять, що сила може бути не лише у зброї, а й у слові</div>
+                </div>
+                <div class="group-item-card">
+                    <div class="group-item-num">442 навчальна група</div>
+                    <div class="group-item-desc">Психологія оперативно-службової діяльності. Моральний дух та ментальна стійкість підрозділів.</div>
+                </div>
+                <div class="group-item-card">
+                    <div class="group-item-num">443 навчальна група</div>
+                    <div class="group-item-desc">Забезпечують силу, витривалість і технічну готовність підрозділів. Їхня справа — щоб техніка працювала безвідмовно, а кордон залишався під надійним захистом.</div>
+                </div>
+                <div class="group-item-card">
+                    <div class="group-item-num">444 навчальна група</div>
+                    <div class="group-item-desc">Телекомунікація та радіотехніка. Безперебійний зв'язок та сучасний технічний контроль кордону.</div>
+                </div>
+            </div>
+
+            <div class="event-info-box">
+                <div class="time-badge">17.06.2026 • Початок о 15:00</div>
+                <div class="venue-text">Ресторанний комплекс «Собкофф», м. Хмельницький</div>
+                <a href="https://maps.google.com/?q=place_id:ChIJpT5AB1UGMkcRRBSVkLpplyY" target="_blank" class="btn-gold-action">
+                    Показати на карті
+                </a>
+            </div>
         </div>
-    </header>
 
-    <main>
-        <section class="greeting-section" data-aos="fade-up">
-            <div class="container">
-                <div class="card-block text-center">
-                    <h2 class="title-gold">ТИМ, ХТО ПРОЙШОВ ЦЕЙ ШЛЯХ З НАМИ</h2>
-                    <div class="line-gold-small"></div>
-                    <p class="desc-text">Дорогі наставники, любі батьки та найближчі друзі!</p>
-                    <p class="desc-text">Цей випуск — не лише наша заслуга. Це результат вашої віри, підтримки та науки. Ми пройшли цей шлях пліч-о-пліч, і сьогодні маємо велику честь запросити вас розділити з нами історичний момент перетворення курсантів на офіцерів.</p>
+        <div class="gold-border-card">
+            <div class="timer-title">До початку урочистостей залишилось:</div>
+            <div class="timer-display">
+                <div class="timer-element">
+                    <div id="days-val" class="timer-value">00</div>
+                    <div class="timer-label">Днів</div>
+                </div>
+                <div class="timer-element">
+                    <div id="hours-val" class="timer-value">00</div>
+                    <div class="timer-label">Год</div>
+                </div>
+                <div class="timer-element">
+                    <div id="mins-val" class="timer-value">00</div>
+                    <div class="timer-label">Хв</div>
                 </div>
             </div>
-        </section>
-
-        <section class="main-date-section" data-aos="zoom-in">
-            <div class="container text-center">
-                <p class="label">ДАТА ПРОВЕДЕННЯ СВЯТКУВАННЯ</p>
-                <div class="big-date">17 . 06 . 2026</div>
-                <div class="timer-wrapper">
-                    <p class="label">ДО ПОЧАТКУ СВЯТКУВАННЯ:</p>
-                    <div class="countdown-timer">
-                        <div class="time-unit"><span id="days">00</span><small>днів</small></div>
-                        <div class="time-unit"><span id="hours">00</span><small>год</small></div>
-                        <div class="time-unit"><span id="mins">00</span><small>хв</small></div>
-                        <div class="time-unit"><span id="secs">00</span><small>сек</small></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="stats-section">
-            <div class="container">
-                <div class="stats-grid">
-                    <div class="card-block text-center" data-aos="fade-up">
-                        <span class="num" data-target="1391">0</span>
-                        <p class="stat-label">Днів навчання</p>
-                    </div>
-                    <div class="card-block text-center" data-aos="fade-up" data-aos-delay="100">
-                        <span class="num" data-target="106">0</span>
-                        <p class="stat-label">Випускників курсу</p>
-                    </div>
-                    <div class="card-block text-center" data-aos="fade-up" data-aos-delay="200">
-                        <span class="num" data-target="4">0</span>
-                        <p class="stat-label">Навчальні групи</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="groups-section">
-            <div class="container">
-                <h2 class="section-title text-center" data-aos="fade-up">НАШ ФАКУЛЬТЕТ</h2>
-                
-                <div class="card-block group-box" data-aos="fade-up">
-                    <div class="group-number">441</div>
-                    <div class="group-text">
-                        <h3>Філологія</h3>
-                        <p>Майстри переговорів та дипломатії. Їхнє слово відкриває кордони для друзів і стає залізним аргументом для ворогів.</p>
-                    </div>
-                </div>
-
-                <div class="card-block group-box" data-aos="fade-up">
-                    <div class="group-number">442</div>
-                    <div class="group-text">
-                        <h3>Психологія оперативно-службової діяльності</h3>
-                        <p>Знають, як зберегти бойовий дух. Надійна опора для кожного прикордонника у найскладніших емоційних та бойових ситуаціях.</p>
-                    </div>
-                </div>
-
-                <div class="card-block group-box" data-aos="fade-up">
-                    <div class="group-number">443</div>
-                    <div class="group-text">
-                        <h3>Організація діяльності інженерно-технічних підрозділів</h3>
-                        <p>Зводять неприступні рубежі. Їхні інженерні рішення та фортифікації — це перший і найміцніший фізичний щит нашої держави.</p>
-                    </div>
-                </div>
-
-                <div class="card-block group-box" data-aos="fade-up">
-                    <div class="group-number">444</div>
-                    <div class="group-text">
-                        <h3>Телекомунікація та радіотехніка</h3>
-                        <p>Архітектори цифрових кордонів. Без їхнього зв'язку будь-яка зброя — просто залізо. Ті, для кого немає перешкод, а є лише сигнал, який треба посилити.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="location-section" data-aos="zoom-in">
-            <div class="container">
-                <div class="card-block text-center">
-                    <h2 class="title-gold">ЛОКАЦІЯ</h2>
-                    <p class="desc-text" style="margin-bottom: 20px;">Інформація про місце проведення банкету прихована.</p>
-                    
-                    <button id="reveal-btn" class="btn-reveal" onclick="showSecret()">РОЗСЕКРЕТИТИ</button>
-                    
-                    <div id="secret-location" style="display: none;">
-                        <div class="line-gold-small"></div>
-                        <h3 class="big-location-text">ГРК "SOBKOF"</h3>
-                        <p class="desc-text">м. Хмельницький</p>
-                        <p class="time-gold">Збір гостей о 13:00</p>
-                        <a href="https://maps.app.goo.gl/9Q9Xf6S6v7X9Y7Y98" class="map-link">ПОКАЗАТИ НА КАРТІ</a>
-                    </div>
-
-                    <script>
-                        function showSecret() {
-                            document.getElementById('reveal-btn').style.display = 'none';
-                            const secretBox = document.getElementById('secret-location');
-                            secretBox.style.display = 'block';
-                            secretBox.classList.add('fade-in');
-                        }
-                    </script>
-                </div>
-            </div>
-        </section>
-
-        <section class="photo-section">
-            <div class="container photo-container">
-                <h2 class="section-title text-center" data-aos="fade-up">СПОГАДИ</h2>
-                <div class="photo-grid">
-                    <div class="photo-item" data-aos="fade-up"><img src="photo1.jpg" alt="Фото 1"></div>
-                    <div class="photo-item" data-aos="fade-up" data-aos-delay="100"><img src="photo2.jpg" alt="Фото 2"></div>
-                    <div class="photo-item" data-aos="fade-up" data-aos-delay="200"><img src="photo3.jpg" alt="Фото 3"></div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container text-center">
-            <div class="f-line"></div>
-            <p>2022 — 2026 | НАДСУ</p>
-            <p class="dev">Запрошення розроблено курсантами 444 навчальної групи 📡</p>
         </div>
-    </footer>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="script.js?v=2"></script>
+        <div class="gold-border-card" style="padding: 20px;">
+            <div class="timer-title" style="margin-bottom: 10px;">Будні та спогади груп факультету</div>
+            <div class="gallery-container">
+                <button class="nav-arrow arrow-left" onclick="slideChange(-1)">❮</button>
+                <button class="nav-arrow arrow-right" onclick="slideChange(1)">❯</button>
+
+                <div class="gallery-track" id="galleryTrack">
+                    <div class="gallery-slide">
+                        <img src="photo1.jpg" alt="441 група">
+                        <div class="gallery-caption">Випускники 441 навчальної групи (Філологія)</div>
+                    </div>
+                    <div class="gallery-slide">
+                        <img src="photo2.jpg" alt="442 група">
+                        <div class="gallery-caption">Випускники 442 навчальної групи (Психологія)</div>
+                    </div>
+                    <div class="gallery-slide">
+                        <img src="photo3.jpg" alt="443 група">
+                        <div class="gallery-caption">Випускники 443 навчальної групи (Інженерні підрозділи)</div>
+                    </div>
+                    <div class="gallery-slide">
+                        <img src="photo4.jpg" alt="444 група">
+                        <div class="gallery-caption">Випускники 444 навчальної групи (Зв'язок та радіотехніка)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="dots-box">
+                <span class="dot-indicator active" onclick="jumpToSlide(0)"></span>
+                <span class="dot-indicator" onclick="jumpToSlide(1)"></span>
+                <span class="dot-indicator" onclick="jumpToSlide(2)"></span>
+                <span class="dot-indicator" onclick="jumpToSlide(3)"></span>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            Запрошення розроблене та налаштоване:<br>
+            <span class="footer-highlight">Випускниками факультету забезпечення оперативно-службової діяльності</span>
+        </div>
+
+    </div>
+
+    <script>
+        const audio = document.getElementById("backgroundAudio");
+        const btn = document.getElementById("audioBtn");
+
+        function startExperience() {
+            const overlay = document.getElementById("welcomeOverlay");
+            overlay.classList.add("hidden");
+            audio.play();
+            btn.classList.add("playing");
+            btn.innerText = "⏸️";
+        }
+
+        function toggleAudio() {
+            if (audio.paused) {
+                audio.play();
+                btn.classList.add("playing");
+                btn.innerText = "⏸️";
+            } else {
+                audio.pause();
+                btn.classList.remove("playing");
+                btn.innerText = "🎵";
+            }
+        }
+
+        const targetTime = new Date('June 17, 2026 15:00:00').getTime();
+
+        function runCountdown() {
+            const now = new Date().getTime();
+            const distance = targetTime - now;
+
+            if (distance <= 0) {
+                document.getElementById('days-val').innerText = '00';
+                document.getElementById('hours-val').innerText = '00';
+                document.getElementById('mins-val').innerText = '00';
+                return;
+            }
+
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+            document.getElementById('days-val').innerText = d < 10 ? '0' + d : d;
+            document.getElementById('hours-val').innerText = h < 10 ? '0' + h : h;
+            document.getElementById('mins-val').innerText = m < 10 ? '0' + m : m;
+        }
+        setInterval(runCountdown, 60000);
+        runCountdown();
+
+        let slideIndex = 0;
+        const totalSlides = document.querySelectorAll('.gallery-slide').length;
+        const track = document.getElementById('galleryTrack');
+        const dots = document.querySelectorAll('.dot-indicator');
+
+        function renderSlide() {
+            track.style.transform = `translateX(-${slideIndex * 100}%)`;
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === slideIndex);
+            });
+        }
+
+        function slideChange(direction) {
+            slideIndex += direction;
+            if (slideIndex >= totalSlides) slideIndex = 0;
+            else if (slideIndex < 0) slideIndex = totalSlides - 1;
+            renderSlide();
+        }
+
+        function jumpToSlide(idx) {
+            slideIndex = idx;
+            renderSlide();
+        }
+
+        let touchStart = 0;
+        const viewport = document.querySelector('.gallery-container');
+        
+        viewport.addEventListener('touchstart', e => {
+            touchStart = e.changedTouches[0].screenX;
+        }, false);
+
+        viewport.addEventListener('touchend', e => {
+            let touchEnd = e.changedTouches[0].screenX;
+            if (touchStart - touchEnd > 40) slideChange(1);
+            if (touchEnd - touchStart > 40) slideChange(-1);
+        }, false);
+    </script>
 </body>
 </html>
